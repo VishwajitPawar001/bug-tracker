@@ -14,6 +14,10 @@ const ticketSchema = new mongoose.Schema(
       enum: ["low", "medium", "high"],
       default: "medium"
     },
+    order: {
+      type: Number,
+      default: 0,
+    },
     status: {
       type: String,
       enum: ["todo", "inprogress", "done"],
@@ -25,15 +29,20 @@ const ticketSchema = new mongoose.Schema(
     },
     assignee: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
+      ref: "User",
+      default: "null"
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
     },
-    attachments: [String]
+    attachments: [
+      {
+        type: "String"
+      }
+    ]
   },
-  
+
   { timestamps: true }
 );
 

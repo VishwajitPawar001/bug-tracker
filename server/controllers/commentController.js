@@ -1,31 +1,31 @@
 const Comment = require("../models/Comment");
 
-// Add Comment
+// ➕ ADD COMMENT
 exports.addComment = async (req, res) => {
   try {
-    const { ticketId, text } = req.body;
+    const { text, ticketId } = req.body;
 
     const comment = await Comment.create({
-      ticketId,
       text,
-      userId: req.user._id
+      ticketId,
+      user: req.user._id,
     });
 
     res.json(comment);
-  } catch (error) {
-    res.status(500).json(error.message);
+  } catch (err) {
+    res.status(500).json(err.message);
   }
 };
 
-// Get Comments by Ticket
+// 📥 GET COMMENTS
 exports.getComments = async (req, res) => {
   try {
     const comments = await Comment.find({
-      ticketId: req.params.ticketId
-    }).populate("userId", "name email");
+      ticketId: req.params.ticketId,
+    }).populate("user", "name");
 
     res.json(comments);
-  } catch (error) {
-    res.status(500).json(error.message);
+  } catch (err) {
+    res.status(500).json(err.message);
   }
 };
